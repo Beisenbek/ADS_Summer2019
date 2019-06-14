@@ -37,14 +37,16 @@ class Solution {
             return head;
         }
 
-        ListNode* deleteDuplicates(ListNode* head) {
-            if(head == NULL) return head;
-            if(head->next == NULL) return head;
-            if(head->val == head->next->val){
-                head = head->next;
-                return deleteDuplicates(head);
+        ListNode* deleteDuplicates(ListNode* it, ListNode * head) {
+            if(it == NULL || it->next == NULL) return head;
+            
+            if(it->val == it->next->val){
+                it->next = it->next->next;
+            }else{
+                it = it->next;
             }
-            return deleteDuplicates(head->next);
+
+            return deleteDuplicates(it, head);
         }
 };
 
@@ -53,14 +55,14 @@ int main(){
     Solution s;
     ListNode * head = NULL;
 
-    int a[] = {1, 1, 2, 3, 4, 5, 5};
+    int a[] = {1, 1, 1, 2,2,2};
 
-    for(int i = 0; i < 7; ++i){
+    for(int i = 0; i < 6; ++i){
         head = s.add(head, a[i]);
     }
 
     s.print(head);
-    s.deleteDuplicates(head);
+    s.deleteDuplicates(head, head);
     s.print(head);
 
     return 0;
