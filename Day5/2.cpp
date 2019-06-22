@@ -43,11 +43,14 @@ node * add_node(node * root, int x){
     return root;
 }
 
-void print(node * root){
+void print(node * root, string prefix, bool isLeft){
     if(root == NULL) return;
-    print(root->left);
-    cout << root->val << " at level: " << root->level << endl;
-    print(root->right);
+    cout << prefix;
+    if(isLeft) cout << "|*-";
+    else cout << "*--";
+    cout << "("<<root->val << ")"<< endl;
+    print(root->left, prefix + (isLeft ? "|   " : "   "),true);
+    print(root->right,prefix + (isLeft ? "|   " : "   "), false);
 }
 
 string int2str(int x){
@@ -131,9 +134,8 @@ int main(){
         root = add_node(root, x);
     }
 
-    prepare2DText(root);
-    fill2DText(root, 40);
-    print2Dtext();
+   
+    print(root,"",false);
 
     return 0;
 }
