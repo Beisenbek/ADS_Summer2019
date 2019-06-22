@@ -1,4 +1,6 @@
 #include<iostream>
+#include<vector>
+#include<sstream>
 
 using namespace std;
 
@@ -14,6 +16,14 @@ struct node{
         right = NULL;
     }
 };
+
+int max_level(node * root){
+    if(root == NULL) return 0;
+    if(root->left == NULL && root->right == NULL){
+        return root->level;
+    }
+    return max(max_level(root->left), max_level(root->right));
+}
 
 node * add_node(node * root, int x){
     if(root == NULL) root = new node(x, 1);
@@ -40,11 +50,38 @@ void print(node * root){
     print(root->right);
 }
 
+string int2str(int x){
+    stringstream ss;
+    ss << x;
+    return ss.str();
+}
+
+vector<string> plane;
+
 void prepare2DText(node * root){
+    int ml = max_level(root);
+    string b = "";
+    b = b.insert(0,100,' ');
+    for(int i = 0; i <ml; ++i){
+        plane.push_back(b);
+    }
+}
+
+string f(string o, string t, int pos){
+    return o.insert(pos, "--"+t + "++");
+}
+
+void fill2DText(node * root, int pos){
     if(root == NULL) return;
-    print(root->left);
-    cout << root->val << " at level: " << root->level << endl;
-    print(root->right);
+    fill2DText(root->left, pos - 3 - 6);
+    plane[root->level-1] = f(plane[root->level-1], int2str(root->val), pos);
+    fill2DText(root->right, pos + 3 + 6);
+}
+
+void print2Dtext(){
+    for(int i = 0; i < plane.size(); ++i){
+        cout << plane[i] << endl;
+    }
 }
 
 int rightmost(node * root){
@@ -79,13 +116,7 @@ node * del_node(node * root, int val){
     return root;
 }
 
-int max_level(node * root){
-    if(root == NULL) return 0;
-    if(root->left == NULL && root->right == NULL){
-        return root->level;
-    }
-    return max(max_level(root->left), max_level(root->right));
-}
+
 
 int main(){
 
@@ -100,7 +131,9 @@ int main(){
         root = add_node(root, x);
     }
 
-    cout << max_level(root);
+    prepare2DText(root);
+    fill2DText(root, 40);
+    print2Dtext();
 
     return 0;
 }
