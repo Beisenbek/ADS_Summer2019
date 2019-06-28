@@ -50,14 +50,22 @@ struct heap{
             }
         }
 
+        int sift_up(int pos, int ppos){
+            if(ppos < 0 || val[ppos] >= val[pos]) return pos;
+            swap(val[pos],val[ppos]);
+            return sift_up(ppos,(ppos - 1) / 2);
+        }
+
         int sift_up(int pos){
+            return sift_up(pos, (pos - 1) / 2);
+            /*
             int ppos = (pos - 1) / 2;
             while(ppos >=0 && val[ppos] < val[pos] ){
                 swap(val[pos],val[ppos]);
                 pos = ppos;
                 ppos = (pos - 1) / 2;
             }    
-            return pos;
+            return pos;*/
         }
 
         int update(int pos, int d){
