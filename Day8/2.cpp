@@ -2,9 +2,12 @@
 
 using namespace std;
 
-//O(N + N + M + K(N - M)) 
+//O(N + N + M + K(N - M) 
 
-void f(string s, string t){
+bool f(string s, string t){
+    if(t.size() == 0) return false;
+    bool found = false;
+
     int p = 31;
 
     int p_i[s.size() + 1];
@@ -37,7 +40,8 @@ void f(string s, string t){
         }
         y = h_p[i + t.size() - 1];
         if( y - x  == ht * p_i[i]){
-           cout << i << " ";
+            found = true;
+            break;
         }
     }
     return found;
