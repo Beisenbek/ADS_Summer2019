@@ -1,2 +1,7 @@
-ababbababa
-aba
+6
+first
+first
+second
+second
+third
+third
